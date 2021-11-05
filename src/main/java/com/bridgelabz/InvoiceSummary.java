@@ -1,7 +1,8 @@
 package com.bridgelabz;
 
 /**
- * Purpose : class create for invoiceSummary calculate numberOfRides,totalFare,averageFare 
+ * Purpose : class create for invoiceSummary calculate
+ * numberOfRides,totalFare,averageFare
  * 
  */
 public class InvoiceSummary {
@@ -9,15 +10,16 @@ public class InvoiceSummary {
 	private int numberOfRides;
 	private double totalFare;
 	private double averageFare;
-	
+
 	public InvoiceSummary(int numberOfRides, double totaleFare) {
 		this.numberOfRides = numberOfRides;
 		this.totalFare = totaleFare;
-		this.averageFare = this.numberOfRides/this.averageFare;
+		this.averageFare = this.numberOfRides / this.averageFare;
 	}
-	
+
 	/**
 	 * Purpose : override the equals method
+	 * 
 	 * @param : Object obj
 	 */
 	@Override
@@ -33,6 +35,5 @@ public class InvoiceSummary {
 				&& numberOfRides == other.numberOfRides
 				&& Double.doubleToLongBits(totalFare) == Double.doubleToLongBits(other.totalFare);
 	}
-	
-	
+
 }

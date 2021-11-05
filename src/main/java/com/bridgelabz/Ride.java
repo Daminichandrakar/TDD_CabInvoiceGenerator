@@ -1,10 +1,9 @@
 package com.bridgelabz;
 
 /**
- * Purpose : class create for Rides
+ * Purpose : class create for Ride time and distance
  *
  */
-
 public class Ride {
 	public int time;
 	public double distance;

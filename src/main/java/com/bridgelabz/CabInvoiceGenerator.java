@@ -1,12 +1,5 @@
 package com.bridgelabz;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.lang.model.element.NestingKind;
-
 /**
  * Purpose : To simulate Cab Service
  *
@@ -16,11 +9,13 @@ import javax.lang.model.element.NestingKind;
  */
 public class CabInvoiceGenerator {
 
-	private final int MINIMUM_FARE = 5;
-	private final int COST_PER_KILOMETER = 10;
-	private final int COST_PER_MINUTE = 1;
-	
-	RideRepository rideRepository = new RideRepository();
+	RideRepository rideRepository;
+	private CabSubscriptions cabSubscriptions;
+
+	public CabInvoiceGenerator(CabSubscriptions cabSubscriptions) {
+		this.rideRepository = new RideRepository();
+		this.cabSubscriptions = cabSubscriptions;
+	}
 
 	/**
 	 * Purpose : calculate totalFare and minimumFare
@@ -30,24 +25,41 @@ public class CabInvoiceGenerator {
 	 * @return double(totalFare & minimumFare)
 	 */
 	public double calculateFare(double distance, int time) {
-		double totalFare = COST_PER_KILOMETER * distance + COST_PER_MINUTE * time;
-		return Math.max(totalFare, MINIMUM_FARE);
+		return cabSubscriptions.calculateFare(distance, time);
 	}
 
+	/**
+	 * Purpose : To calculate the invoiceSummary for multiple rides
+	 * 
+	 * @param rides
+	 * @return InvoiceSummary : return invoiceSummary object
+	 */
 	public InvoiceSummary calculateFare(Ride[] rides) {
 		double totalFare = 0;
 		for (Ride ride : rides) {
 			totalFare += this.calculateFare(ride.distance, ride.time);
 		}
-		return new InvoiceSummary(rides.length , totalFare);
+		return new InvoiceSummary(rides.length, totalFare);
 	}
-	
-	  public void addRides(String userId, Ride[] rides) {
-	        rideRepository.addRides(userId, rides);
-	    }
 
-	    public InvoiceSummary getInvoiceSummary(String userId) {
-	        return this.calculateFare(rideRepository.getRides(userId));
-	    }
+	/**
+	 * Purpose : Add rides as per userId
+	 * 
+	 * @param userId
+	 * @param rides
+	 */
+	public void addRides(String userId, Ride[] rides) {
+		rideRepository.addRides(userId, rides);
+	}
+
+	/**
+	 * Purpose : To get an invoiceSummary per userId
+	 * 
+	 * @param userId
+	 * @return InvoiceSummary
+	 */
+	public InvoiceSummary getInvoiceSummary(String userId) {
+		return this.calculateFare(rideRepository.getRides(userId));
+	}
 
 }
